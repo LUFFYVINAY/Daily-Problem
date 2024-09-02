@@ -1,0 +1,21 @@
+class Solution {
+    public int chalkReplacer(int[] chalk, int k) {
+        int n=chalk.length-1;
+        int index=0;
+        int i=0;
+        
+        while(true){
+            k = k-chalk[i];
+           
+            if(k<0){
+               index= i;
+               break;
+            }
+            i++;
+            if(i>n){
+                i=0;
+            }
+        }
+        return index;
+    }
+}

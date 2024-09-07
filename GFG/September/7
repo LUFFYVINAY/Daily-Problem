@@ -1,0 +1,33 @@
+/*class Solution {
+    long findNth(long n) {
+        // code here
+        long m = (long) 1e9;
+        ArrayList<Long> st = new ArrayList<>();
+        
+        for (long i = 1; i <= m; i++) {
+            String s = Long.toString(i);
+            if (!s.contains("9")) {
+                st.add(i);
+            }
+        }
+        
+        // Ensure n is within the bounds of the list
+        return st.get((int) n - 1);  // Use n-1 as lists are 0-indexed
+    }
+}*/
+
+class Solution {
+    long findNth(long n) {
+        // Converting n to base 9 (since numbers that do not contain '9' can be represented as base 9 numbers)
+        long result = 0;
+        long base = 1;
+
+        while (n > 0) {
+            result += (n % 9) * base;  // get the base 9 digit and add to the result
+            n /= 9;                    // move to the next base 9 digit
+            base *= 10;                // shift the base 10 place value
+        }
+
+        return result;
+    }
+}

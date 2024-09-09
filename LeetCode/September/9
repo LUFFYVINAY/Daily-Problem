@@ -1,0 +1,61 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public int[][] spiralMatrix(int m, int n, ListNode head) {
+        int[][] matrix = new int[m][n];
+
+        // Initialize matrix with -1
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                matrix[i][j] = -1;
+            }
+        }
+
+        int top = 0, bottom = m - 1, left = 0, right = n - 1;
+        ListNode current = head;
+
+        while (top <= bottom && left <= right && current != null) {
+            // Traverse from left to right
+            for (int i = left; i <= right && current != null; i++) {
+                matrix[top][i] = current.val;
+                current = current.next;
+            }
+            top++;
+
+            // Traverse from top to bottom
+            for (int i = top; i <= bottom && current != null; i++) {
+                matrix[i][right] = current.val;
+                current = current.next;
+            }
+            right--;
+
+            // Traverse from right to left
+            if (top <= bottom) {
+                for (int i = right; i >= left && current != null; i--) {
+                    matrix[bottom][i] = current.val;
+                    current = current.next;
+                }
+                bottom--;
+            }
+
+            // Traverse from bottom to top
+            if (left <= right) {
+                for (int i = bottom; i >= top && current != null; i--) {
+                    matrix[i][left] = current.val;
+                    current = current.next;
+                }
+                left++;
+            }
+        }
+
+        return matrix;
+    }
+}

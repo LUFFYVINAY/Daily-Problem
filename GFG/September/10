@@ -1,0 +1,53 @@
+class Solution {
+    public int isCircle(String arr[]) {
+        // code here
+        HashMap<Character, Integer> firstChar = new HashMap<>();
+        HashMap<Character, Integer> lastChar = new  HashMap<>();
+        
+        for(int i=0;i<arr.length;i++){
+            String Current = arr[i];
+            char first = Current.charAt(0);
+            char last = Current.charAt(Current.length()-1);
+            firstChar.put(first, firstChar.getOrDefault(first,0)+1);
+            lastChar.put(last,lastChar.getOrDefault(last,0)+1);
+        }
+        
+         for (Map.Entry<Character, Integer> entry : firstChar.entrySet()) {
+            char key = entry.getKey();
+            if (!lastChar.containsKey(key) || !lastChar.get(key).equals(entry.getValue())) {
+                return 0;
+            }
+        }
+        
+        Set<Character>st = new HashSet<>();
+        HashMap<Character,Set<Character>> mp = new HashMap<>();
+        
+        for(String word : arr){
+            
+            char first = word.charAt(0);
+            char last = word.charAt(word.length()-1);
+            
+            mp.putIfAbsent(first,new HashSet<>());
+            mp.putIfAbsent(last, new HashSet<>());
+            
+            mp.get(first).add(last);
+            mp.get(last).add(first);
+        }
+        
+        if(mp.isEmpty())return 0;
+        char startnode = mp.keySet().iterator().next();
+        dfs(mp,startnode,st);
+        
+        return st.size()==mp.size()?1:0;
+        
+        
+    }
+    private void dfs(Map<Character, Set<Character>> graph, char node, Set<Character> visited) {
+        visited.add(node);
+        for (char neighbor : graph.getOrDefault(node, new HashSet<>())) {
+            if (!visited.contains(neighbor)) {
+                dfs(graph, neighbor, visited);
+            }
+        }
+    }
+}

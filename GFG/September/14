@@ -1,35 +1,61 @@
 class Solution {
     void rearrange(ArrayList<Integer> arr) {
         // code here
-        int n = arr.size();
-        ArrayList<Integer> result = new ArrayList<>(n);
-        int postindex = 0, negatindex=0;
+       /* Queue<Integer> positive = new LinkedList<>();
+        Queue<Integer> negative = new LinkedList<>();
         
-        while(postindex<n && arr.get(postindex)<0)postindex++;
-        while(negatindex<n  && arr.get(negatindex)>=0)negatindex++;
-        
-        boolean ispositive = true;
-        while(postindex < n || negatindex<n){
+        for(int i=0;i<arr.size();i++){
             
-            if(ispositive && postindex<n){
-                result.add(arr.get(postindex));
-                postindex++;
-                while(postindex<n && arr.get(postindex)<0)postindex++;
+            if(arr.get(i)<0){
+                negative.add(arr.get(i));
             }
-            else if(!ispositive && negatindex<n){
-                result.add(arr.get(negatindex));
-                negatindex++;
-                while(negatindex<n  && arr.get(negatindex)>=0)negatindex++;
-                
+            else{
+                positive.add(arr.get(i));
             }
-            
-            ispositive= !ispositive ;
-            
-            
         }
         
-        for(int i=0;i<n;i++){
-            arr.set(i , result.get(i));
+        boolean isPositiveAdded = false;
+        ArrayList<Integer> ans = new ArrayList<>(arr.size());
+        
+        while (!positive.isEmpty() || !negative.isEmpty()) {
+            if (isPositiveAdded && !positive.isEmpty()) {
+                ans.add(positive.poll());
+                isPositiveAdded = false; // Alternate to add negative next
+            } else if (!isPositiveAdded && !negative.isEmpty()) {
+                ans.add(negative.poll());
+                isPositiveAdded = true; // Alternate to add positive next
+            }
+        }
+        
+        for (int i = 0; i < arr.size(); i++) {
+            arr.set(i, ans.get(i));
+        }*/
+        int n = arr.size();
+        ArrayList<Integer> result = new ArrayList<>(n); 
+        
+        int posIndex = 0, negIndex = 0;
+        // Find the first positive and negative numbers
+        while (posIndex < n && arr.get(posIndex) < 0) posIndex++;
+        while (negIndex < n && arr.get(negIndex) >= 0) negIndex++;
+
+        boolean isPositiveTurn = true; // Start by adding a positive number first
+        
+        while (posIndex < n || negIndex < n) {
+            if (isPositiveTurn && posIndex < n) {
+                result.add(arr.get(posIndex));
+                posIndex++;
+                while (posIndex < n && arr.get(posIndex) < 0) posIndex++; 
+            } else if (!isPositiveTurn && negIndex < n) {
+                result.add(arr.get(negIndex));
+                negIndex++;
+                while (negIndex < n && arr.get(negIndex) >= 0) negIndex++; 
+            }
+            isPositiveTurn = !isPositiveTurn; 
+        }
+        
+        // Replace the original array with the rearranged result
+        for (int i = 0; i < n; i++) {
+            arr.set(i, result.get(i));
         }
     }
 }

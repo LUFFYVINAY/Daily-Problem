@@ -1,0 +1,20 @@
+class Solution {
+    public int longestSubarray(int[] nums) {
+        int max = Arrays.stream(nums).max().getAsInt();
+        int maxlength = Integer.MIN_VALUE;
+        for(int i=0;i<nums.length;i++){
+            int j = i;
+            if(nums[j]==max){
+                while(j<nums.length && nums[j]==max){
+                    j++;
+                }
+                int length = j - i;
+
+                maxlength = Math.max(length,maxlength);
+                i= j-1;
+            }
+        }
+
+        return maxlength;
+    }
+}

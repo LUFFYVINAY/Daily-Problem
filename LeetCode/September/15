@@ -1,0 +1,40 @@
+class Solution {
+    public int findTheLongestSubstring(String s) {
+        // Map to store the first occurrence of a state of vowel parities
+        Map<String, Integer> mp = new HashMap<>();
+        
+        // Initialize an array to track the parity of each vowel
+        int[] state = new int[5]; // [a, e, i, o, u] initialized to 0 (even count)
+
+        String currentState = "00000";  // Start with all vowels having an even count
+        mp.put(currentState, -1);
+        
+        int maxLength = 0;
+        
+        for (int i = 0; i < s.length(); ++i) {
+            // Update state based on the vowel encountered
+            if (s.charAt(i) == 'a') state[0] ^= 1;  // Flip between even/odd for 'a'
+            else if (s.charAt(i) == 'e') state[1] ^= 1; // Flip for 'e'
+            else if (s.charAt(i) == 'i') state[2] ^= 1; // Flip for 'i'
+            else if (s.charAt(i) == 'o') state[3] ^= 1; // Flip for 'o'
+            else if (s.charAt(i) == 'u') state[4] ^= 1; // Flip for 'u'
+
+            // Create a string representation of the current state
+            currentState = "";
+            for (int j = 0; j < 5; ++j) {
+                currentState += state[j];
+            }
+
+            // Check if we've seen this state before
+            if (mp.containsKey(currentState)) {
+                // Calculate the length of the substring
+                maxLength = Math.max(maxLength, i - mp.get(currentState));
+            } else {
+                // Store the first occurrence of this state
+                mp.put(currentState, i);
+            }
+        }
+
+        return maxLength;
+    }
+}

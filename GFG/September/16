@@ -1,0 +1,60 @@
+class Solution{
+    static int maxLength(String S){
+        // code here
+        /*Stack<Character> st = new Stack<>();
+        st.push(S.charAt(0));
+        int count=0;
+        for(int i=1;i<S.length();i++){
+            while(!st.isEmpty()){
+                if(st.peek()=='(' && S.charAt(i)==')'){
+                    st.pop();
+                    count = count + 2;
+                }
+                else{
+                    st.push(S.charAt(i));
+                }
+            }
+            st.push(S.charAt(i));
+        }
+        
+        return count;*/
+        int open =0, close =0 ;
+        int max =0;
+        
+        for(int i =0;i<S.length();i++){
+            char c = S.charAt(i);
+            if(c=='('){
+                open++;
+            }
+            else{
+                close++;
+            }
+            if(open==close){
+                int len = open +close;
+                max = Math.max(max,len);
+            }
+            else if(open<close){
+                open = close = 0;
+            }
+        }
+
+        open = close=0;
+        for(int i = S.length()-1;i>=0;i--){
+            char c = S.charAt(i);
+            if(c=='('){
+                open++;
+            }
+            else{
+                close++;
+            }
+            if(open==close){
+                int len = open +close;
+                max = Math.max(max,len);
+            }
+            else if(open>close){
+                open = close = 0;
+            }
+        }
+        return max;
+    }
+}

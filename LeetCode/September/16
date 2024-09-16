@@ -1,0 +1,32 @@
+class Solution {
+    public int findMinDifference(List<String> timePoints) {
+        ArrayList<Integer> time = new ArrayList<>();
+        for(int i=0;i<timePoints.size();i++){
+            int current = Conversion(timePoints.get(i));
+            time.add(current);
+        }
+
+        Collections.sort(time);
+
+        int diff =Integer.MAX_VALUE;
+        for(int i=1;i<time.size();i++){
+            diff = Math.min(diff, time.get(i)-time.get(i-1));
+        }
+
+        int circulardiff = 1440 + time.get(0)-time.get(timePoints.size()-1);
+        diff = Math.min(diff,circulardiff);
+
+
+        return diff;
+
+
+    }
+    public int Conversion(String Ctime){
+        String[]time = Ctime.split(":");
+
+        int hours = Integer.parseInt(time[0]);
+        int min = Integer.parseInt(time[1]);
+
+        return hours*60 +min;
+    }
+}

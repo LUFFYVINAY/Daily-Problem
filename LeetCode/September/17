@@ -1,0 +1,33 @@
+class Solution {
+    public String[] uncommonFromSentences(String s1, String s2) {
+       String[] str1 = s1.split(" ");
+        String[] str2 = s2.split(" ");
+        HashMap<String, Integer> mp = new HashMap<>();
+        List<String> list = new ArrayList<>();
+
+        // Count words from the first sentence
+        for (String word : str1) {
+            mp.put(word, mp.getOrDefault(word, 0) + 1);
+        }
+
+        // Count words from the second sentence
+        for (String word : str2) {
+            mp.put(word, mp.getOrDefault(word, 0) + 1);
+        }
+
+        // Find uncommon words
+        for (Map.Entry<String, Integer> entry : mp.entrySet()) {
+            if (entry.getValue() == 1) {
+                list.add(entry.getKey());
+            }
+        }
+
+        // Convert the list to an array
+        String[] result = new String[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            result[i] = list.get(i);
+        }
+
+        return result;
+    }
+}

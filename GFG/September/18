@@ -1,22 +1,72 @@
-class Solution {
-    public String largestNumber(int[] nums) {
+class Solution
+{
+    //Function to check if brackets are balanced or not.
+        static boolean ispar(String x) {
+        // If the string is empty, it is considered balanced
+        if (x.isEmpty()|| x.length()==0) {
+            return true;  // Return true for an empty string
+        }
+
+
+     
         
-        String []num = new String[nums.length];
-        for(int i=0;i<nums.length;i++){
-            num[i] = Integer.toString(nums[i]);
+        Stack<Character> stack = new Stack<>();
+
+        for (int i = 0; i < x.length(); i++) {
+            char ch = x.charAt(i);
+            
+            // Push opening brackets to the stack
+            if (ch == '(' || ch == '{' || ch == '[') {
+                stack.push(ch);
+            }
+            // Check matching closing brackets
+            else if (ch == ')' && !stack.isEmpty() && stack.peek() == '(') {
+                stack.pop();
+            }
+            else if (ch == '}' && !stack.isEmpty() && stack.peek() == '{') {
+                stack.pop();
+            }
+            else if (ch == ']' && !stack.isEmpty() && stack.peek() == '[') {
+                stack.pop();
+            } 
+            // If there's no matching bracket or the stack is empty, return false
+            else {
+                return false;
+            }
         }
 
-        Arrays.sort(num,(a,b)->(b+a).compareTo(a+b));
-
-        if(num[0].equals("0")){
-            return "0";
+        // If stack is empty, all brackets matched and are properly nested
+        return stack.isEmpty();
+    
+        
+        /*if(x.isEmpty()){
+            return true;
         }
-
-        StringBuilder sb = new StringBuilder();
-        for(int i=0;i<num.length;i++){
-            sb.append(num[i]);
+        int opensquarbracket=0,  closesquarbracket=0;
+        int opencurlbracket=0,   closecurlbracket=0;
+        int openroundbracket=0 , closeroundbracket=0;
+        
+        
+        for(int i=0;i<x.length();i++){
+            if(x.charAt(i)=='('){
+                openroundbracket++;
+            }
+            else if(x.charAt(i)==')'){
+                closeroundbracket++;
+            }
+            if(x.charAt(i)=='['){
+               opensquarbracket++;
+            }
+            else if(x.charAt(i)==']'){
+                closesquarbracket++;
+            }
+            if(x.charAt(i)=='{'){
+                opencurlbracket++;
+            }
+            else if(x.charAt(i)=='}'){
+                closecurlbracket++;
+            }
         }
-
-        return sb.toString();
+        return (openroundbracket==closeroundbracket) && (closesquarbracket==opensquarbracket)&&(opencurlbracket==closecurlbracket);*/
     }
 }

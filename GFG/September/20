@@ -1,0 +1,17 @@
+class Solution {
+    // Returns count buildings that can see sunlight
+    public int countBuildings(int[] height) {
+        // code here
+        int counthigher=1;
+       
+        int max =height[0];
+        for(int i=1;i<height.length;i++){
+            
+            if(max<height[i]){
+                counthigher++;
+                max=height[i];
+            }
+        }
+        return counthigher;
+    }
+}

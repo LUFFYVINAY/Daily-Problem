@@ -1,0 +1,37 @@
+class Solution {
+    // Function to clone a linked list with next and random pointer.
+    Node copyList(Node head) {
+        // your code here
+        Node temp = head;// creating the clone of each node
+        while(temp!=null){
+            Node clone = new Node(temp.data);
+            clone.next = temp.next;
+            temp.next= clone;
+            temp = clone.next;
+        }
+        
+        
+        temp = head; // traversing the updated ll (i.e original and copied with random cordinates)
+        while(temp!=null){
+            if(temp.random!=null){
+                temp.next.random = temp.random.next;
+            }
+            temp = temp.next.next;
+            
+        }
+        
+        temp = head; // copying the nodes in ans 
+        Node copy = new Node(0);
+        Node ans = copy;
+        while(temp!=null){
+            
+            copy.next =temp.next;
+            copy = copy.next;
+            temp.next = copy.next;
+            temp = temp.next;
+        }
+        
+        return ans.next;
+        
+    }
+}

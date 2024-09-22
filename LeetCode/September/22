@@ -1,0 +1,32 @@
+class Solution {
+    public int findKthNumber(int n, int k) {
+        int curr = 1;  // Start with the first number (lexicographically smallest)
+        k--;  // Decrement k because we are starting with the first number
+
+        while (k > 0) {
+            long steps = calculateSteps(n, curr, curr + 1);  // Calculate steps between curr and curr+1
+            if (steps <= k) {
+                // If the number of steps is less than or equal to k, we skip this subtree
+                curr++;
+                k -= steps;
+            } else {
+                // Otherwise, we go deeper into the subtree
+                curr *= 10;
+                k--;
+            }
+        }
+
+        return curr;
+    }
+
+    // Function to calculate the number of steps between two numbers in lexicographical order
+    private long calculateSteps(int n, long curr, long next) {
+        long steps = 0;
+        while (curr <= n) {
+            steps += Math.min(n + 1, next) - curr;
+            curr *= 10;
+            next *= 10;
+        }
+        return steps;
+    }
+}

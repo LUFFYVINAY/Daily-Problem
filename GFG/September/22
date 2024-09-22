@@ -1,0 +1,56 @@
+class Solution {
+    int lps(String str) {
+        
+        /*if (allCharactersSame(str)) {
+            return str.length() - 1;  
+        }
+        
+        int n = str.length();
+        int max = 0; // Initialize max to 0 instead of Integer.MIN_VALUE
+
+        for (int i = 0; i < n / 2; i++) {
+            String s = str.substring(0, i + 1);
+            String st = str.substring(n - i - 1); // Corrected to n - i - 1
+
+            if (s.equals(st)) {
+                int length = s.length();
+                max = Math.max(length, max);
+            }
+        }
+        
+        return max;*/
+        
+        
+        
+        int n = str.length();
+        int[] lps = new int[n]; // Create LPS array
+        int len = 0; // Length of the previous longest prefix suffix
+        int i = 1; // Start from the second character
+        
+        while (i < n) {
+            if (str.charAt(i) == str.charAt(len)) {
+                len++;
+                lps[i] = len;
+                i++;
+            } else {
+                if (len != 0) {
+                    len = lps[len - 1]; // Use the previous prefix suffix length
+                } else {
+                    lps[i] = 0;
+                    i++;
+                }
+            }
+        }
+        
+        return lps[n - 1];
+    }
+   /* private boolean allCharactersSame(String str) {
+        char firstChar = str.charAt(0);
+        for (int i = 1; i < str.length(); i++) {
+            if (str.charAt(i) != firstChar) {
+                return false;
+            }
+        }
+        return true;
+    }*/
+}

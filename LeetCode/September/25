@@ -1,0 +1,115 @@
+class TrieNode {
+    TrieNode[] children = new TrieNode[26]; // Assuming lowercase letters a-z
+    int count = 0; // To store the number of words that pass through this node
+}
+
+class Solution {
+    TrieNode root = new TrieNode(); // Root of the Trie
+    
+    public void insert(String word) {
+        TrieNode currentNode = root;
+        for (char c : word.toCharArray()) {
+            int index = c - 'a';
+            if (currentNode.children[index] == null) {
+                currentNode.children[index] = new TrieNode();
+            }
+            currentNode = currentNode.children[index];
+            currentNode.count++; // Increase the count for this prefix
+        }
+    }
+    
+    public int getPrefixScore(String word) {
+        TrieNode currentNode = root;
+        int score = 0;
+        for (char c : word.toCharArray()) {
+            int index = c - 'a';
+            if (currentNode.children[index] != null) {
+                currentNode = currentNode.children[index];
+                score += currentNode.count; // Add the count of words with this prefix
+            }
+        }
+        return score;
+    }
+    
+    public int[] sumPrefixScores(String[] words) {
+        // Insert all words into the Trie
+        for (String word : words) {
+            insert(word);
+        }
+        
+        // Calculate the prefix scores for each word
+        int[] result = new int[words.length];
+        for (int i = 0; i < words.length; i++) {
+            result[i] = getPrefixScore(words[i]);
+        }
+        
+        return result;
+    }
+}
+
+
+
+/*class Solution {
+    public int[] sumPrefixScores(String[] words) {
+        HashSet<String> st = new HashSet<>();
+        int[] ans = new int[words.length];
+        HashMap<String, Integer> mp = new HashMap<>();
+        
+        // Loop through each word in words array
+        for (int i = 0; i < words.length; i++) {
+            // Get all prefixes of the current word
+            List<String> res = allPrefix(words[i]);
+            
+            // Loop through all prefixes and count how many words have the current prefix
+            for (int j = 0; j < res.size(); j++) {
+                int count = 0;
+                for (int k = 0; k < words.length; k++) {
+                    if (isPrefix(res.get(j), words[k])) {
+                        count++;
+                    }
+                }
+                // Add the prefix count to the result for the current word
+                ans[i] += count;
+            }
+        }
+        
+        return ans;
+        HashMap<String, Integer> prefixCount = new HashMap<>();
+        int[] ans = new int[words.length];
+        
+        // Populate the prefixCount map with all prefixes of all words
+        for (String word : words) {
+            StringBuilder prefix = new StringBuilder();
+            for (char c : word.toCharArray()) {
+                prefix.append(c);  // Build the prefix step by step
+                String currentPrefix = prefix.toString();
+                prefixCount.put(currentPrefix, prefixCount.getOrDefault(currentPrefix, 0) + 1);
+            }
+        }
+
+        // Calculate the sum of prefix scores for each word
+        for (int i = 0; i < words.length; i++) {
+            StringBuilder prefix = new StringBuilder();
+            for (char c : words[i].toCharArray()) {
+                prefix.append(c);
+                ans[i] += prefixCount.get(prefix.toString());  // Add the count for the current prefix
+            }
+        }
+        
+        return ans;
+    }
+
+    // Method to get all prefixes of a given string
+    public List<String> allPrefix(String s) {
+        List<String> res = new ArrayList<>();
+        for (int i = 1; i <= s.length(); i++) {
+            res.add(s.substring(0, i));  // Fix substring range
+        }
+        return res;
+    }
+
+    // Method to check if 'prefix' is a valid prefix of string 's'
+    public boolean isPrefix(String prefix, String s) {
+        return s.startsWith(prefix);  // Use startsWith for clarity
+    }
+}*/

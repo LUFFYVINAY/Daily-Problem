@@ -1,0 +1,42 @@
+class Solution {
+    // Function to check whether the list is palindrome.
+    boolean isPalindrome(Node head) {
+        // Your code here
+        Node midStart = length(head);
+        Node mid = reverse(midStart);
+        
+        Node current = head;
+        
+        while(mid!=null){
+            if(current.data != mid.data){
+                return false;
+            }
+            current=current.next;
+            mid = mid.next;
+        }
+        return true;
+        
+    }
+    public Node length(Node head){
+       
+        Node fast = head;
+        Node slow = head;
+        while(fast!=null && fast.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        
+        return slow;
+    }
+    public Node reverse(Node head){
+        Node prev = null;
+        Node current = head;
+        while (current != null) {
+            Node next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+        return prev;
+    }
+}

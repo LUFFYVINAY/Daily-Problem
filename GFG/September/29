@@ -1,0 +1,13 @@
+class Solution {
+    int totalCount(int k, int[] arr) {
+        // code here
+        int sum =0;
+        for(int i=0;i<arr.length;i++){
+            sum = sum + mininumberOfPartition(arr[i],k);
+        }
+        return sum ;
+    }
+    public int mininumberOfPartition (int n , int k){
+        return  (n%k==0)?n/k:n/k+1;
+    }
+}

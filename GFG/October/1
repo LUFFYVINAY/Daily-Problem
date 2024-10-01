@@ -1,0 +1,18 @@
+class Solution {
+    public long multiplyTwoLists(Node first, Node second) {
+        // Code here
+        long num1 = listToLong(first);
+        long num2 = listToLong(second);
+        
+        return num1*num2;
+    }
+    public long listToLong(Node head){
+        long digit=0;
+        Node current = head;
+        while(current!=null){
+            digit = digit*10 + (long)current.data;
+            current = current.next;
+        }
+        return digit;
+    }
+}

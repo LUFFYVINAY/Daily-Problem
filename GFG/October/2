@@ -1,0 +1,26 @@
+class Solution {
+    public static int rotateDelete(ArrayList<Integer> arr) {
+        // code here
+        /*int n = arr.size() / 2;
+        int operations = 0;
+        int k = 1;
+
+        // Run the loop for n operations and adjust accordingly
+        while (operations <= n && k <= n) {
+            for (int i = 0; i < arr.size(); i++) {
+                arr.set(i, arr.get((i + arr.size()) % arr.size()));  // Corrected the set operation
+            }
+            int index = arr.size() - k + 1;  // Corrected index calculation to avoid out of bounds
+            arr.remove(index);  // Remove the element at the specified index
+            k++;
+            operations++;
+        }
+
+        return arr.get(0);  */// Return the last remaining element
+        int n = arr.size();
+        int temp = n/2;
+        int i =  3*(temp/2);
+        if(temp % 2 ==1 )i++;
+        return arr.get(n-i);
+    }
+}

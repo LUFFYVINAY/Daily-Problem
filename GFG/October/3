@@ -1,0 +1,26 @@
+class Solution {
+    // Function to find the majority elements in the array
+    public List<Integer> findMajority(List<Integer> nums) {
+        // Your code goes here.
+        int oneThird =  nums.size()/3;
+        TreeMap<Integer,Integer> mp = new TreeMap<>();
+        
+        for(int i =0;i<nums.size();i++){
+            mp.put(nums.get(i),mp.getOrDefault(nums.get(i),0)+1);
+            
+        }
+        ArrayList<Integer> ans = new ArrayList<>();
+        
+        for(Map.Entry<Integer,Integer> entry : mp.entrySet()){
+            if(entry.getValue()>oneThird){
+                ans.add(entry.getKey());
+            }
+        }
+        
+        if(ans.size()==0){
+            ans.add(-1);
+        }
+        
+        return ans;
+    }
+}

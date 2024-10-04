@@ -1,0 +1,32 @@
+class Solution {
+    public long dividePlayers(int[] skill) {
+        long sum = 0;
+        for (int i = 0; i < skill.length; i++) {
+            sum += (long) skill[i];
+        }
+
+        int n = skill.length;
+        if (sum % (n / 2) != 0) {
+            return -1; 
+        }
+
+        int target = (int)(sum / (n / 2)); 
+        long total = 0;
+        HashMap<Integer, Integer> mp = new HashMap<>();
+        
+        for (int i = 0; i < skill.length; i++) {
+            int complement = target - skill[i]; 
+            if (mp.containsKey(complement)) {
+                total += (long) skill[i] * complement;
+                mp.put(complement, mp.get(complement) - 1);
+                if (mp.get(complement) == 0) {
+                    mp.remove(complement);
+                }
+            } else {
+                mp.put(skill[i], mp.getOrDefault(skill[i], 0) + 1);
+            }
+        }
+        
+        return mp.isEmpty() ? total : -1;
+    }
+}

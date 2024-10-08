@@ -1,0 +1,46 @@
+// class Node {
+//     int data;
+//     Node npx;
+
+//     Node(int x) {
+//         data = x;
+//         npx = null;
+//     }
+// }
+class Solution {
+    // Insert a new node at the front of the XOR linked list
+     Node head;
+
+    // XOR of two node references
+    private Node XOR(Node a, Node b) {
+        return new Node((a != null ? System.identityHashCode(a) : 0) ^
+                        (b != null ? System.identityHashCode(b) : 0));
+    }
+
+    // Insert a new node at the beginning of the XOR linked list
+    public Node insert(Node head, int data) {
+        Node newNode = new Node(data);
+        newNode.npx = XOR(head, null);
+        if (head != null) {
+            head.npx = XOR(newNode, XOR(null, head.npx));
+        }
+        return newNode;
+    }
+
+    // Get the list of data values from the XOR linked list
+    public ArrayList<Integer> getList(Node head) {
+        ArrayList<Integer> result = new ArrayList<>();
+        Node current = head;
+        Node prev = null;
+        Node next;
+
+        while (current != null) {
+            result.add(current.data);
+            next = XOR(prev, current.npx);
+            prev = current;
+            current = next;
+        }
+
+        return result;
+    }
+}

@@ -1,0 +1,16 @@
+class Solution {
+    public long minimumSteps(String s) {
+        long count=0;
+        long  one =0;
+        for(char ch : s.toCharArray()){
+            if(ch=='1'){
+                ++one;
+            }
+            else{
+                count+=one;
+            }
+
+        }
+        return count;
+    }
+}

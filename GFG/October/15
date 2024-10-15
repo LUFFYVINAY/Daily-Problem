@@ -1,0 +1,20 @@
+class Solution {
+    // Function to count the number of subarrays which adds to the given sum.
+    static int subArraySum(int arr[], int tar) {
+        // add your code here
+        int count=0;
+        int sum=0;
+        HashMap<Integer,Integer> mp = new HashMap<>();
+        mp.put(0,1);
+        for(int n : arr){
+            sum +=n;
+            if(mp.containsKey(sum-tar)){
+                count +=mp.get(sum-tar);
+            }
+            else{
+                mp.put(sum,mp.getOrDefault(sum,0)+1);
+            }
+        }
+        return count;
+    }
+}

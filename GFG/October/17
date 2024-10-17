@@ -1,0 +1,24 @@
+class Solution {
+    // Function to append a new node with newData at the end of a linked list
+    Node[] alternatingSplitList(Node head) {
+        // code here
+        if(head.next == null){
+            return new Node[]{head,null};
+        }
+        
+        Node new_head = head.next;
+        Node curr1 = head;
+        Node curr2 = head.next;
+        
+        while(curr2!=null){
+            
+            curr1.next = curr2.next;
+            curr1 = curr2;
+            curr2 = curr2.next;
+            
+            
+        }
+        
+        return new Node[]{head,new_head};
+    }
+}

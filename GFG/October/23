@@ -1,0 +1,21 @@
+
+class Solution {
+
+    // Return the sum of last k nodes
+    public int sumOfLastN_Nodes(Node head, int n) {
+        // write code here
+        ArrayList<Integer> ans = new ArrayList<>();
+        int sum=0;
+        Node current = head;
+        while(current!=null){
+            ans.add(current.data);
+            current = current.next;
+        }
+        int start = ans.size()-n;
+        for(int i=start ; i<ans.size();i++){
+            sum +=ans.get(i);
+        }
+        
+        return sum;
+    }
+}

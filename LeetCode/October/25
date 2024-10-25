@@ -1,0 +1,25 @@
+class Solution {
+    public List<String> removeSubfolders(String[] folder) {
+        TreeSet<String> ans = new TreeSet<>();
+        for (String str : folder) {
+            ans.add(str);
+        }
+        
+        List<String> res = new ArrayList<>();
+        String root = ans.first(); 
+        
+        
+        for (String curr : ans) {
+            if (!isPrefix(root, curr)) {
+                res.add(curr);
+                root = curr; 
+            }
+        }
+        
+        return res;
+    }
+    
+    public boolean isPrefix(String s1, String s2) {
+        return s2.startsWith(s1 + "/");
+    }
+}

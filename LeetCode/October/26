@@ -1,0 +1,110 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+
+
+/*
+    
+class Solution {
+    public int[] treeQueries(TreeNode root, int[] queries) {
+        int[] ans = new int[queries.length];
+       
+        for (int i = 0; i < queries.length; i++) {
+           
+            TreeNode current = copyTree(root);
+            
+            
+            current = deleteSubtree(current, queries[i]);
+            
+            
+            int height = maxDepth(current);
+            ans[i] = height-1;
+        }
+        return ans;
+    }
+
+    
+    public int maxDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int leftHeight = maxDepth(root.left);
+        int rightHeight = maxDepth(root.right);
+
+        return Math.max(leftHeight, rightHeight) + 1;
+    }
+
+    
+    public TreeNode deleteSubtree(TreeNode root, int key) {
+        if (root == null) {
+            return null;
+        }
+        if (root.val == key) {
+            return null;
+        }
+
+        root.left = deleteSubtree(root.left, key);
+        root.right = deleteSubtree(root.right, key);
+
+        return root;
+    }
+    
+    
+    private TreeNode copyTree(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        TreeNode newNode = new TreeNode(root.val);
+        newNode.left = copyTree(root.left);
+        newNode.right = copyTree(root.right);
+        return newNode;
+    }
+}  
+*/
+class Solution {
+    public int[] treeQueries(TreeNode root, int[] queries) {
+        int[] ans = new int[queries.length];
+
+        dfs(root, 0, 0);
+        for (int i = 0; i < queries.length; i++) {
+            ans[i] = mh.get(queries[i]); // Corrected typo in variable name
+        }
+        return ans;
+    }
+
+    private Map<Integer, Integer> mh = new HashMap<>();
+    private Map<Integer, Integer> h = new HashMap<>();
+
+    private int height(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        if (h.containsKey(root.val)) {
+            return h.get(root.val);
+        }
+        int size = 1 + Math.max(height(root.left), height(root.right));
+        h.put(root.val, size);
+        return size;
+    }
+
+    public void dfs(TreeNode root, int depth, int maxHeight) {
+        if (root == null) {
+            return;
+        }
+        mh.put(root.val, maxHeight);
+        dfs(root.left, depth + 1, Math.max(maxHeight, depth + height(root.right)));
+        dfs(root.right, depth + 1, Math.max(maxHeight, depth + height(root.left)));
+    }
+}

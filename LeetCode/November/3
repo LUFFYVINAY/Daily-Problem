@@ -1,0 +1,18 @@
+class Solution {
+    public boolean rotateString(String s, String goal) {
+        if(s.length()==goal.length()){
+            String sb = goal + goal;
+            int i=0;
+            int j = s.length();
+            while(i<goal.length()){
+                if(s.equals(sb.substring(i,i+j))){
+                    return true;
+                }
+                i++;
+
+            }
+        }
+        
+        return false;
+    }
+}

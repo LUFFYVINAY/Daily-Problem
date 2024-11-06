@@ -1,0 +1,86 @@
+/*class Solution {
+    public boolean canSortArray(int[] nums) {
+        if(isSorted(nums)){
+            return true;
+        }
+
+        HashMap<Integer, Integer> mp = new HashMap<>();
+        for (int n : nums) {
+            int count = countSetBits(n);
+            if (mp.containsKey(count)) {
+                mp.put(count, mp.get(count) + 1);
+            } else {
+                mp.put(count, 1);
+            }
+        }
+
+        for (Map.Entry<Integer, Integer> entry : mp.entrySet()) {
+            if (entry.getValue() == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public int countSetBits(int n) {
+        int count = 0;
+        while (n != 0) {
+            count += (n & 1);
+            n >>= 1;
+        }
+        return count;
+    }
+
+    public boolean isSorted(int []nums){
+        if(nums.length==1){
+            return true;
+        }
+        for(int i=0;i<nums.length-1;i++){
+            if(nums[i]>nums[i+1]){
+                return false;
+            }
+        }
+        return true;
+    }
+}*/
+
+class Solution {
+        public boolean canSortArray(int[] nums) {
+        
+            for(int i=0;i<nums.length;i++){
+                for(int j=i+1;j<nums.length;j++){
+                    if(nums[i]>nums[j]){
+                        if(countSetBits(nums[i])!=countSetBits(nums[j])){
+                                return false;
+                        }
+                        int temp= nums[i];
+                        nums[i]=nums[j];
+                        nums[j]=temp;
+                    }
+                    
+                    
+                }
+                
+            }
+            for (int i = 0; i < nums.length - 1; i++) {
+                if (nums[i] > nums[i + 1]) {
+                    return false;
+                }
+            }
+            return true;
+
+
+            
+        }
+
+        public int countSetBits(int n) {
+            int count = 0;
+            while (n != 0) {
+                count += (n & 1);
+                n >>= 1;
+            }
+            return count;
+        }
+
+       
+    }

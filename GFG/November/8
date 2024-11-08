@@ -1,0 +1,65 @@
+class Solution {
+    static int minRepeats(String s1, String s2) {
+        /*int count = 1;
+        StringBuilder dummy = new StringBuilder(s1);
+
+        
+        while (dummy.length() < s2.length()) {
+            dummy.append(s1);
+            count++;
+        }
+        
+        
+        if (dummy.indexOf(s2) != -1) {
+            return count;
+        }
+
+        
+        dummy.append(s1);
+        if (dummy.indexOf(s2) != -1) {
+            return count + 1;
+        }
+        
+        return -1; */
+        
+        /*String c ="";
+        int count = 0;
+        while(c.length()<=2*s2.length()){
+            c+=s1;
+            count++;
+            if(c.contains(s2)){
+                return count;
+            }
+        }
+        return -1;*/
+        StringBuilder a=new StringBuilder(s1);
+        int cnt=1;
+        
+        
+        if(s1.contains(s2)){
+            return cnt;
+        }
+        
+        for(int i=0;i<s2.length();i++){
+            if(!s1.contains(""+s2.charAt(i))){
+                return -1;
+            }
+        }
+        
+        
+        while(a.length()<2*s2.length()){
+            a.append(s1);
+            cnt++;
+            
+            if(a.toString().contains(s2)){
+                return cnt;
+            }
+            
+        
+            
+            
+            
+        }
+        return -1;
+    }
+}

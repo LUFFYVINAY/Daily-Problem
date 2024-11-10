@@ -1,0 +1,79 @@
+ class Solution {
+    /*public int minimumSubarrayLength(int[] nums, int k) {
+        int n = nums.length;
+        int[][] bit = new int[31][n];
+        int[][] prefix = new int[31][n + 1]; // Adding 1 for easier prefix calculation
+
+        // Construct the bit array
+        for (int j = 0; j < 31; j++) {
+            for (int i = 0; i < n; i++) {
+                bit[j][i] = (nums[i] >> j) & 1;
+            }
+        }
+
+        // Construct the prefix array
+        for (int j = 0; j < 31; j++) {
+            for (int i = 1; i <= n; i++) {
+                prefix[j][i] = prefix[j][i - 1] + bit[j][i - 1];
+            }
+        }
+
+        int minLength = Integer.MAX_VALUE;
+
+        // Sliding window
+        int left = 0;
+        for (int right = 0; right < n; right++) {
+            int windowSum = calculateOR(prefix, left + 1, right + 1);
+            while (windowSum >= k && left <= right) {
+                minLength = Math.min(minLength, right - left + 1);
+                left++;
+                windowSum = calculateOR(prefix, left + 1, right + 1);
+            }
+        }
+
+        return minLength == Integer.MAX_VALUE ? -1 : minLength;
+    }
+
+    private int calculateOR(int[][] prefix, int left, int right) {
+        int k = 0;
+        for (int u = 0; u <= 30; u++) {
+            int oneCount = prefix[u][right] - prefix[u][left - 1];
+            if (oneCount >= 1) {
+                k |= (1 << u);
+            }
+        }
+        return k;
+    }*/
+   
+    public int minimumSubarrayLength(int[] nums, int k) {
+        int n = nums.length;
+        int[] count = new int[32];
+        int minLength = n + 1;
+        for (int left = 0, right = 0, orValue = 0; right < n; right++) {
+            orValue = getOrValueRight(count, nums[right], orValue);
+            while (left <= right && orValue >= k) {
+                minLength = Math.min(minLength, right - left + 1);
+                orValue = getOrValueLeft(count, nums[left], orValue);
+                left++;
+            }
+        }
+        return minLength == n + 1 ? -1 : minLength;
+    }
+    private int getOrValueRight(int[] count, int value, int orValue) {
+        orValue |= value;
+        for (int i = 0; i < 32; i++) {
+            count[i] += (value >> i & 1) > 0 ? 1 : 0;
+        }
+        return orValue;
+    }
+    private int getOrValueLeft(int[] count, int value, int orValue) {
+        for (int i = 0; i < 32; i++) {
+            count[i] += (value >> i & 1) > 0 ? -1 : 0;
+            if (count[i] == 0) {
+                orValue &= ~(1 << i);
+            }
+        }
+        return orValue;
+    }
+
+}

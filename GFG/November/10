@@ -1,0 +1,28 @@
+class Solution {
+    // Function to return a list containing the union of the two arrays.
+    public static ArrayList<Integer> findUnion(int a[], int b[]) {
+        // add your code here
+        HashSet<Integer> st = new HashSet<>();
+        
+        int i=0;
+        while(i<a.length){
+            if(!st.contains(a[i])){
+                st.add(a[i]);
+                
+            }
+            i++;
+        }
+        int j=0;
+        while(j<b.length){
+            if(!st.contains(b[j])){
+                st.add(b[j]);
+                
+            }
+            j++;
+        }
+        
+        ArrayList<Integer> res = new ArrayList<>(st);
+        Collections.sort(res);
+        return res;
+    }
+}

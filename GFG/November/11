@@ -1,0 +1,31 @@
+class Solution {
+    public int minIncrements(int[] arr) {
+        int[] Occurrence = new int[1000000 + 7];
+        int count = 0;
+        
+        // Populate the occurrence array
+        for (int num : arr) {
+            Occurrence[num]++;
+        }
+        
+        // Adjust occurrences to make all elements unique
+        for (int i = 0; i < Occurrence.length; i++) {
+            // If there are duplicates of `i`
+            while (Occurrence[i] > 1) { 
+                int nextNum = i + 1;
+                
+                // Find the next available slot for a unique number
+                while (Occurrence[nextNum] > 0) {
+                    nextNum++;
+                }
+                
+                // Move one occurrence of `i` to `nextNum`
+                Occurrence[i]--;
+                Occurrence[nextNum]++;
+                count += nextNum - i; // Track all moves made
+            }
+        }
+        
+        return count;
+    }
+}

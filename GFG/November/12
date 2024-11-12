@@ -1,0 +1,22 @@
+class Solution {
+    static boolean canAttend(int[][] arr) {
+        // Your code here
+        TreeMap<Integer,Integer> mp = new TreeMap<>();
+        
+        mp.put(arr[0][0],arr[0][1]);
+        for(int i=1;i<arr.length;i++){
+            
+            int start = arr[i][0];
+            int end =  arr[i][1];
+            
+            Integer lastValue = mp.lowerKey(end);
+            if(lastValue!=null && start<=mp.get(lastValue)-1){
+                return false;
+            }
+            mp.put(start,end);
+        
+        }
+        
+        return true;
+    }
+}

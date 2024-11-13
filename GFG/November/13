@@ -1,0 +1,126 @@
+/* Node of a linked list
+ class Node {
+   int data;
+    Node next;
+    Node(int d)  { data = d;  next = null; }
+}
+ Linked List class
+class LinkedList
+{
+    Node head;  // head of list
+}*/
+
+
+
+/*class Intersect {
+    // Function to find intersection point in Y-shaped Linked Lists.
+    int intersectPoint(Node head1, Node head2) {
+        HashMap<Integer, Pair> map = new HashMap<>();
+        int ans = -1;
+        
+        Node current1 = head1;
+        while (current1 != null) {
+            int data = current1.data;
+            int length = length(current1);
+            map.put(data, new Pair(data, length));
+            current1 = current1.next;
+        }
+        
+        Node current2 = head2;
+        while (current2 != null) {
+            int data = current2.data;
+            int length = length(current2);
+            Pair p = new Pair(data, length);
+            
+            // Retrieve the pair from the map if it exists and check lengths
+            if (map.containsKey(data)) {
+                Pair pr = map.get(data);
+                if (pr.length == length) {
+                    ans = pr.data;
+                    break;
+                }
+            }
+            current2 = current2.next;
+        }
+        return ans;
+    }
+    
+    public int length(Node n) {
+        int length = 0;
+        Node current = n;
+        while (current != null) {
+            current = current.next;
+            length++;
+        }
+        return length;
+    }
+}
+
+class Pair {
+    int data;
+    int length;
+    
+    public Pair(int data, int length) {
+        this.data = data;
+        this.length = length;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        
+        Pair pair = (Pair) o;
+        return data == pair.data && length == pair.length;
+    }
+    
+    @Override
+    public int hashCode() {
+        return 31 * data + length;
+    }
+}*/
+
+class Intersect {
+    // Function to find the intersection point in Y-shaped linked lists.
+    int intersectPoint(Node head1, Node head2) {
+        int len1 = getLength(head1);
+        int len2 = getLength(head2);
+        
+        // Advance the longer list by the difference in lengths.
+        if (len1 > len2) {
+            head1 = advanceBy(head1, len1 - len2);
+        } else {
+            head2 = advanceBy(head2, len2 - len1);
+        }
+        
+        // Traverse both lists together until a common node is found.
+        while (head1 != null && head2 != null) {
+            if (head1 == head2) {
+                return head1.data;
+            }
+            head1 = head1.next;
+            head2 = head2.next;
+        }
+        
+        return -1; // No intersection found
+    }
+
+    // Helper function to get the length of a linked list
+    private int getLength(Node head) {
+        int length = 0;
+        while (head != null) {
+            head = head.next;
+            length++;
+        }
+        return length;
+    }
+
+    // Helper function to advance the pointer by n steps
+    private Node advanceBy(Node head, int steps) {
+        while (steps-- > 0 && head != null) {
+            head = head.next;
+        }
+        return head;
+    }
+}
+

@@ -1,0 +1,37 @@
+class Solution {
+    public int findLengthOfShortestSubarray(int[] arr) {
+        int n = arr.length;
+        int left = 0, right = n - 1;
+
+        // Find the non-decreasing prefix
+        while (left < n - 1 && arr[left] <= arr[left + 1]) {
+            left++;
+        }
+
+        // If the array is already sorted, return 0
+        if (left == n - 1) {
+            return 0;
+        }
+
+        // Find the non-decreasing suffix
+        while (right > 0 && arr[right - 1] <= arr[right]) {
+            right--;
+        }
+
+        // Calculate the result as removing the prefix, suffix, or combining both
+        int length = Math.min(n - left - 1, right); // Remove either prefix or suffix
+
+        // Try to merge the two sorted parts
+        int i = 0, j = right;
+        while (i <= left && j < n) {
+            if (arr[i] <= arr[j]) {
+                length = Math.min(length, j - i - 1);
+                i++;
+            } else {
+                j++;
+            }
+        }
+
+        return length;
+    }
+}

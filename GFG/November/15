@@ -1,0 +1,22 @@
+class Solution {
+    public int getSecondLargest(int[] arr) {
+        // Code Here
+        PriorityQueue<Integer> pq= new PriorityQueue<>(Collections.reverseOrder());
+        for(int n:arr){
+            pq.offer(n);
+        }
+        int max = pq.poll();
+        int res=-1;
+        while(!pq.isEmpty()){
+            int current = pq.peek();
+            if(current==max){
+                pq.poll();
+            }
+            else{
+                res=pq.poll();
+                break;
+            }
+        }
+        return res;
+    }
+}

@@ -1,0 +1,44 @@
+class Solution {
+    void nextPermutation(int[] arr) {
+        int index = -1;
+        int n = arr.length;
+
+        // Find the first decreasing element from the end
+        for (int i = n - 1; i > 0; i--) { // Corrected loop to avoid out-of-bounds error
+            if (arr[i - 1] < arr[i]) {
+                index = i - 1;
+                break;
+            }
+        }
+
+        if (index == -1) {
+            // If no decreasing element is found, reverse the array
+            reverse(arr, 0, n - 1);
+            return;
+        }
+
+        // Find the smallest element larger than arr[index] from the right
+        for (int i = n - 1; i > index; i--) {
+            if (arr[i] > arr[index]) {
+                int temp = arr[i];
+                arr[i] = arr[index];
+                arr[index] = temp;
+                break;
+            }
+        }
+
+        // Reverse the part after index
+        reverse(arr, index + 1, n - 1);
+    }
+
+    // Function to reverse a portion of the array
+    void reverse(int[] arr, int i, int j) {
+        while (i < j) { // Changed condition to strictly less than
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+            i++;
+            j--;
+        }
+    }
+}

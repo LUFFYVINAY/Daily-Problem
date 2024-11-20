@@ -1,0 +1,33 @@
+class Solution {
+    // Function to find the majority elements in the array
+    public List<Integer> findMajority(int[] nums) {
+        // Your code goes here.
+         int oneThird = nums.length / 3;
+        
+        // TreeMap to store frequency counts of each element
+        TreeMap<Integer, Integer> mp = new TreeMap<>();
+        
+        // Count frequency of each element
+        for (int i = 0; i < nums.length; i++) {
+            mp.put(nums[i], mp.getOrDefault(nums[i], 0) + 1);
+        }
+
+        // Create a list to hold the result
+        ArrayList<Integer> ans = new ArrayList<>();
+        
+        // Iterate over the TreeMap in ascending order of keys (natural order)
+        for (Map.Entry<Integer, Integer> entry : mp.entrySet()) {
+            // Check if the element appears more than one-third of the size of the array
+            if (entry.getValue() > oneThird) {
+                ans.add(entry.getKey());
+            }
+        }
+        
+        // If no majority elements are found, return -1
+        if (ans.size() == 0) {
+            return ans;
+        }
+        
+        return ans;
+    }
+}

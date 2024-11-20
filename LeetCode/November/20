@@ -1,0 +1,29 @@
+class Solution {
+    public int takeCharacters(String s, int k) {
+        int n = s.length();
+        int[] freq = new int[3];
+        int ans = n;
+
+        // Count the total frequency of each character
+        for (int i = 0; i < n; i++) {
+            ++freq[s.charAt(i) - 'a'];
+        }
+
+        // Check if it's possible to have at least `k` occurrences of each character
+        if (freq[0] < k || freq[1] < k || freq[2] < k) {
+            return -1;
+        }
+
+        // Sliding window to calculate the longest valid substring
+        int[] currentFreq = {freq[0], freq[1], freq[2]}; // Copy of initial frequency
+        for (int i = 0, j = 0; j < n; ++j) {
+            --currentFreq[s.charAt(j) - 'a'];
+            while (currentFreq[0] < k || currentFreq[1] < k || currentFreq[2] < k) {
+                ++currentFreq[s.charAt(i++) - 'a'];
+            }
+            ans = Math.min(ans, n - (j - i + 1));
+        }
+
+        return ans;
+    }
+}

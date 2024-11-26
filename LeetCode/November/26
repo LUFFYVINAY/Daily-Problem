@@ -1,0 +1,29 @@
+class Solution {
+    public int findChampion(int n, int[][] edges) {
+        int[][] matrix = new int[n][n];
+        int sum, count = 0, win = -1;
+
+        for (int i = 0; i < edges.length; i++) {
+            int from = edges[i][0];
+            int to = edges[i][1];
+
+            matrix[from][to] = 1;
+        }
+
+        for (int i = 0; i < matrix.length; i++) {
+            sum = 0; // Reset sum for each column
+            for (int j = 0; j < matrix[0].length; j++) {
+                sum += matrix[j][i];
+            }
+
+            if (sum == 0) {
+                count++;
+                win = i;
+                if (count > 1) {
+                    return -1;
+                }
+            }
+        }
+        return win;
+    }
+}

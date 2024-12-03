@@ -1,0 +1,17 @@
+class Solution {
+    public String addSpaces(String s, int[] spaces) {
+        StringBuilder sb = new StringBuilder();
+        int prevIndex = 0; // Track the previous index to slice the string
+
+        for (int spaceIndex : spaces) {
+            // Append substring from the last index to the current space index
+            sb.append(s.substring(prevIndex, spaceIndex));
+            sb.append(" "); // Add the space
+            prevIndex = spaceIndex; // Update the previous index
+        }
+        // Append the remaining part of the string after the last space
+        sb.append(s.substring(prevIndex));
+
+        return sb.toString();
+    }
+}

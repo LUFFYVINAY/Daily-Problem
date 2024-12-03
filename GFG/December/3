@@ -1,0 +1,42 @@
+class Solution {
+    public static int minChar(String s) {
+        // Write your code here
+        String reverse = new StringBuilder(s).reverse().toString();
+
+        String combined = s + "#" + reverse;
+
+        int[] lps = compute(combined);
+        
+        int plaindromelength = lps[lps.length-1];
+        
+        String toAdd = reverse.substring(0,reverse.length()-plaindromelength);
+        
+        return toAdd.length();
+    }
+    public static int[]compute(String pattern){
+        int []lps = new int[pattern.length()];
+        int len =0;
+        int i=1;
+
+        while(i<pattern.length()){
+            if(pattern.charAt(i)==pattern.charAt(len)){
+                len++;
+                
+                lps[i]=len;
+                i++;
+
+            }
+            else{
+                if(len!=0){
+                    len = lps[len-1];
+
+                }
+                else{
+                    lps[i]=len;
+                    i++;
+                }
+            }
+        }
+        return lps;
+    }
+}

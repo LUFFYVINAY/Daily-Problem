@@ -1,0 +1,56 @@
+// class Solution {
+//     char []c ={
+//         'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'
+//     };
+//     public boolean canMakeSubsequence(String str1, String str2) {
+//         StringBuilder sb = new StringBuilder();
+//         for(int i=0;i<str1.length();i++){
+//             char c = str1.charAt(i);
+//             sb.append((char)('a'+ ( c- 'a' + 1 ) % 26 ));
+//         }
+
+//         if(isSubsquence(sb.toString(),str2)){
+//             return true;
+//         }
+//         return false;
+//     }
+//     public boolean isSubsquence(String s1, String s2){
+//         if(s2.length()>s1.length()){
+//             return false;
+//         }
+
+//         int i=0;
+//         int j=0;
+
+//         while(i<s2.length() && j<s1.length())
+//         {
+//             if(s2.charAt(i)==s1.charAt(j)){
+//                 i++;
+//             }
+//             j++;
+//         }
+        
+//         return i==s2.length();
+//     }
+// }
+
+class Solution {
+    public boolean canMakeSubsequence(String str1, String str2) {
+        int i = 0; // Pointer for str2
+        int j = 0; // Pointer for str1
+
+        while (i < str2.length() && j < str1.length()) {
+            char c1 = str1.charAt(j);
+            char c2 = str2.charAt(i);
+
+            // Check if the characters match directly or via cyclic transformation
+            if (c1 == c2 || (char) ('a' + (c1 - 'a' + 1) % 26) == c2) {
+                i++; // Move pointer for str2
+            }
+            j++; // Always move pointer for str1
+        }
+
+        // If we traversed all of str2, it's a subsequence
+        return i == str2.length();
+    }
+}

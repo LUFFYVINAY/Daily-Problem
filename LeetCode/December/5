@@ -1,0 +1,37 @@
+class Solution {
+    public boolean canChange(String start, String target) {
+        // Remove all '_' characters and compare the remaining characters
+        String startWithoutUnderscore = start.replace("_", "");
+        String targetWithoutUnderscore = target.replace("_", "");
+        
+        // If the non-'_' parts are not the same, transformation is impossible
+        if (!startWithoutUnderscore.equals(targetWithoutUnderscore)) {
+            return false;
+        }
+
+        int i = 0, j = 0, n = start.length();
+
+        // Check positions for valid movement
+        while (i < n && j < n) {
+            // Skip '_' in start
+            while (i < n && start.charAt(i) == '_') i++;
+            // Skip '_' in target
+            while (j < n && target.charAt(j) == '_') j++;
+
+            // If either pointer goes out of bounds, break
+            if (i == n || j == n) break;
+
+            // If characters don't match, return false
+            if (start.charAt(i) != target.charAt(j)) return false;
+
+            // Check movement validity
+            if (start.charAt(i) == 'L' && i < j) return false; // 'L' cannot move right
+            if (start.charAt(i) == 'R' && i > j) return false; // 'R' cannot move left
+
+            i++;
+            j++;
+        }
+
+        return true;
+    }
+}

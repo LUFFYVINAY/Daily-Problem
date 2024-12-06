@@ -1,18 +1,13 @@
 class Solution {
-    public int maxCount(int[] banned, int n, int maxSum) {
-        HashSet<Integer> st = new HashSet<>();
-        for(int i :  banned){
-            st.add(i);
+    // Function to find hIndex
+    public int hIndex(int[] citations) {
+        // code here
+         Arrays.sort(citations);
+        int n = citations.length;
+        int Hcount = 0;
+        while(Hcount < n && citations[n-1-Hcount]>Hcount){
+            Hcount++;
         }
-        int count=0,sum=0;
-        for(int i=1;i<=n;i++){
-            if(!st.contains(i)){
-                sum +=i;
-                if(sum<=maxSum)count++;
-                
-            }
-            
-        }
-        return count++;
+        return Hcount;
     }
 }

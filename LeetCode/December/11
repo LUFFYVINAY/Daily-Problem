@@ -1,0 +1,25 @@
+class Solution {
+    public int maximumBeauty(int[] nums, int k) {
+        int min = Arrays.stream(nums).min().getAsInt() - k;
+        int max = Arrays.stream(nums).max().getAsInt() + k;
+
+        // Use a frequency difference array
+        int[] freq = new int[max - min + 2];
+
+        for (int num : nums) {
+            int start = num - k - min; // Adjust range relative to min
+            int end = num + k - min;   // Adjust range relative to min
+            freq[start]++;
+            freq[end + 1]--;
+        }
+
+        // Compute the prefix sum and find the maximum frequency
+        int ans = 0, current = 0;
+        for (int value : freq) {
+            current += value;
+            ans = Math.max(ans, current);
+        }
+
+        return ans;
+    }
+}

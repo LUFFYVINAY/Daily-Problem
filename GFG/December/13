@@ -1,0 +1,7 @@
+class Solution {
+    public int findMin(int[] arr) {
+        // complete the function here
+        int ans = Arrays.stream(arr).min().getAsInt();
+        return ans;
+    }
+}

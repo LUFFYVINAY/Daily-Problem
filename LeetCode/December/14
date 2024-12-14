@@ -1,0 +1,36 @@
+class Solution {
+  public static long continuousSubarrays(int[] nums) {
+	    int n = nums.length;
+	    long count = 0;
+
+	    // Two Deques to maintain the max and min values in the current window
+	    Deque<Integer> maxDeque = new LinkedList<>();
+	    Deque<Integer> minDeque = new LinkedList<>();
+
+	    int left = 0; // Start of the sliding window
+	    for (int right = 0; right < n; right++) {
+	        // Maintain the decreasing order in maxDeque
+	        while (!maxDeque.isEmpty() && nums[maxDeque.peekLast()] < nums[right]) {
+	            maxDeque.pollLast();
+	        }
+	        maxDeque.offerLast(right);
+
+	        // Maintain the increasing order in minDeque
+	        while (!minDeque.isEmpty() && nums[minDeque.peekLast()] > nums[right]) {
+	            minDeque.pollLast();
+	        }
+	        minDeque.offerLast(right);
+
+	        // Ensure the condition is satisfied
+	        while (nums[maxDeque.peekFirst()] - nums[minDeque.peekFirst()] > 2) {
+	            if (maxDeque.peekFirst() == left) maxDeque.pollFirst();
+	            if (minDeque.peekFirst() == left) minDeque.pollFirst();
+	            left++; // Shrink the window
+	        }
+
+	        count += right - left + 1;
+	    }
+
+	    return count;
+	}
+}

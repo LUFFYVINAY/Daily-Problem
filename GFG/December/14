@@ -1,0 +1,42 @@
+class Solution {
+    	static int findThePoint(int[] arr, int low, int high, int key) {
+        // Binary Search Implementation
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (arr[mid] == key) {
+                return mid; // Key found
+            } else if (arr[mid] > key) {
+                high = mid - 1; // Search in the left half
+            } else {
+                low = mid + 1; // Search in the right half
+            }
+        }
+        return -1; // Key not found
+    }
+
+    static int search(int[] arr, int key) {
+        int index = -1;
+
+        // Find the "point of rotation" or where the sequence changes from increasing to decreasing
+        for (int i = 0; i < arr.length - 1; i++) {
+            if (arr[i] > arr[i + 1]) {
+                index = i;
+                break;
+            }
+        }
+
+        // Perform binary search in both segments
+        int ans1 = findThePoint(arr, 0, index, key); // Search in the left (increasing) segment
+        int ans2 = findThePoint(arr, index + 1, arr.length - 1, key); // Search in the right (decreasing) segment
+
+        // Return the appropriate result
+        if (ans1 != -1) {
+            return ans1;
+        }
+        if (ans2 != -1) {
+            return ans2;
+        }
+        return -1; // Key not found in either segment
+    }
+}

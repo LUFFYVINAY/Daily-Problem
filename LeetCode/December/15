@@ -1,0 +1,62 @@
+import java.util.PriorityQueue;
+
+class Solution {
+    public double maxAverageRatio(int[][] classes, int extraStudents) {
+        // Priority queue sorted by the largest gain in average
+        PriorityQueue<Pair> pq = new PriorityQueue<>((a, b) -> 
+            Double.compare(b.gain(), a.gain())
+        );
+        
+        double totalAvg = 0;
+        int n = classes.length;
+
+        // Add all classes to the priority queue
+        for (int[] cls : classes) {
+            int pass = cls[0];
+            int total = cls[1];
+            pq.offer(new Pair(pass, total));
+        }
+
+        // Add extra students to maximize the total average
+        while (extraStudents > 0) {
+            Pair current = pq.poll();
+            current.addStudent(); // Add a student to the current class
+            pq.offer(current); // Reinsert into the queue
+            extraStudents--;
+        }
+
+        // Calculate the total average
+        while (!pq.isEmpty()) {
+            Pair current = pq.poll();
+            totalAvg += current.avg();
+        }
+
+        return totalAvg / n;
+    }
+}
+
+class Pair {
+    int pass;
+    int total;
+
+    public Pair(int pass, int total) {
+        this.pass = pass;
+        this.total = total;
+    }
+
+    // Calculate the current average
+    public double avg() {
+        return (double) pass / total;
+    }
+
+    // Calculate the gain in average if one student is added
+    public double gain() {
+        return (double) (pass + 1) / (total + 1) - (double) pass / total;
+    }
+
+    // Add one student to the class
+    public void addStudent() {
+        pass++;
+        total++;
+    }
+}

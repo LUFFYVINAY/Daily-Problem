@@ -1,0 +1,35 @@
+class Solution {
+    public int kthElement(int a[], int b[], int k) {
+        // code here
+        int n = a.length;
+        int m = b.length;
+        int i=0;
+        int j=0;
+        int l=0;
+        int[]arr= new int[n+m];
+        while(i<n && j<m){
+            if(a[i]>b[j]){
+                arr[l]=b[j];
+                j++;
+            }
+            else{
+                arr[l]=a[i];
+                i++;
+            }
+            l++;  
+        }
+        
+        while(i<n){
+            arr[l]=a[i];
+            i++;
+            l++;
+        }
+        while(j<m){
+            arr[l]=b[j];
+            j++;
+            l++;
+        }
+        
+        return arr[k-1];
+    }
+}

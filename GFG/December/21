@@ -1,0 +1,36 @@
+class Solution {
+    // Function to rotate matrix anticlockwise by 90 degrees.
+    static void rotateby90(int mat[][]) {
+        // code here
+        int row = mat.length;
+        int col = mat[0].length;
+        
+        for(int i = 0; i < row; i++) {
+            for(int j = 0; j < col; j++) {
+                if(i == j) break;
+                swapVal(i, j, mat);
+            }
+        }
+        
+        int i = 0, j = row-1;
+        while(i < j) {
+            for(int k = 0; k < col; k++) {
+                swapRow(i, j, k, mat);
+            }
+            i++;
+            j--;
+        }
+    }
+    
+    public static void swapVal(int i, int j, int mat[][]) {
+        int temp = mat[i][j];
+        mat[i][j] = mat[j][i];
+        mat[j][i] = temp;
+    }
+    
+    public static void swapRow(int i, int j, int k, int mat[][]) {
+        int temp = mat[i][k];
+        mat[i][k] = mat[j][k];
+        mat[j][k] = temp;
+    }
+}
